@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- <link rel="stylesheet" href="../mainpagestyle.css" /> -->
+    <title>Prompt Pop-Up</title>
+    <script type="text/javascript">
+      const socket = io();
+      const supplyPrompts = [
+        "Zombie in a Walmart bag",
+        "A dinosaur conductor",
+        "A lego unicorn",
+      ];
+      document.addEventListener("DOMContentLoaded", () => {
+        r = Math.floor(Math.random() * supplyPrompts.length);
+        document.getElementById("prompt-box").placeholder = supplyPrompts[r];
+      });
+
+      window.onload = function () {
+        document
+        .getElementById("prompt")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const prompt = formData.get("prompt-box");
+          console.log(prompt);
+          socket.emit("prompt", { prompt });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <form id="prompt">
+        <label for="name">What should they draw?!?!</label><br />
+        <input type="text" id="prompt-box" name="prompt-box" />
+        <input id="submit" type="submit" value="Submit prompt!" />
+      </form>
+    </main>
+  </body>
+</html>

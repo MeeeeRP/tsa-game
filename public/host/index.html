@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="../script/host.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="timer"></div>
+    <main>
+      <div id="prompt-data">
+        <iframe src="../prompt/index.html" frameborder="0"></iframe>
+        <h3 id="prompt-text">Please write a prompt</h3>
+      </div>
+      <br />
+      <div id="player1" class="avatar-div">
+        <h4 id="player1-name">name1</h4>
+        <img
+          id="player1-pic"
+          class="avatar-pic"
+          src="../avatar-sample.gif"
+          alt=""
+        />
+      </div>
+      <div id="player2" class="avatar-div">
+        <h4>name2</h4>
+        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+      </div>
+      <div id="player3" class="avatar-div">
+        <h4>name3</h4>
+        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+      </div>
+      <div id="player4" class="avatar-div">
+        <h4>name4</h4>
+        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+      </div>
+    </main>
+  </body>
+</html>

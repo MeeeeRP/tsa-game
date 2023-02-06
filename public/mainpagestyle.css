@@ -1,0 +1,183 @@
+/* #avatar:hover {
+  opacity: 0.5;
+} */
+
+ul {
+  background-color: black;
+}
+/*
+it goes like tinted white gray btw
+I sent a pic but obviously that doesn't work
+
+also I was thinking what if instead of when you click an avatar
+it goes gray, instead you click an avatar and it hides
+so then you would see the gif moving below it
+and I can make the borders of the gifs be the color they draw in
+so then it looks selected
+the only thing that needs to be implemented is when you click
+on a different avatar it unhides
+that's what I was doing with the classList add avatar-img-selected
+and I was trying to get it so when it is not selected it takes it off
+but it wasn't working
+the added thing works tho
+if you click something the border of the top one goes pink rn
+I just need to change it so it is the bottom one
+*/
+
+@media screen and (min-width: 650px) {
+  #avatar {
+    padding: 10px;
+    width: 100%;
+    list-style: none;
+    display: grid;
+    gap: 0px 20px;
+    grid-template-columns: 100px 100px 100px;
+    justify-content: flex-start;
+    height: fit-content;
+  }
+  #player-id {
+    width: 100%;
+    padding: 10%;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10%;
+    margin: 0;
+    padding: 3%;
+    align-items: center;
+  }
+  #nickname {
+    justify-self: flex-end;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #avatar {
+    padding: 10px;
+    width: 100%;
+    list-style: none;
+    display: grid;
+    gap: 0px 20px;
+    grid-template-columns: 20% 20% 20%;
+    justify-content: center;
+    height: fit-content;
+  }
+  form {
+    position: static;
+  }
+  #player-id {
+    width: 100%;
+    padding: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: 3%;
+  }
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  background: lightgoldenrodyellow;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  flex-wrap: wrap;
+  margin: 0px;
+  align-items: flex-start;
+}
+body {
+  background-color: bisque;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gamelist {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  height: fit-content;
+  text-align: center;
+}
+ol {
+  background-color: blueviolet;
+  width: 80%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: 60px;
+  padding: 0;
+}
+.avatar-img, .avatar-img-gif {
+  padding: 0;
+  width: inherit;
+  margin: 0;
+  border: 10px solid brown;
+}
+#avatar1.avatar-img-gif {
+  border: 10px solid red;
+}
+#avatar2.avatar-img-gif {
+  border: 10px solid yellow;
+}
+#avatar3.avatar-img-gif {
+  border: 10px solid blue;
+}
+#avatar4.avatar-img-gif {
+  border: 10px solid green;
+}
+#avatar5.avatar-img-gif {
+  border: 10px solid purple;
+}
+img.avatar-img:hover {
+  opacity: 0;
+}
+img.avatar-img {
+  z-index: 1;
+}
+input.avatar-img {
+}
+#avatar1 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+#avatar2 {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+#avatar3 {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+#avatar4 {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+#avatar5 {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+h3 {
+  padding: 0;
+  margin: 0;
+  width: 50%;
+}
+h1 {
+  width: 100%;
+}
+#quick-start {
+  width: 20%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+.avatar-img-selected {
+  opacity: 0;
+  border: 10px solid palevioletred;
+  
+}

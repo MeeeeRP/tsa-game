@@ -1,43 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"
+      integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href="mainpagestyle.css" />
+    <title>TSA Game DrAwInG!!!!????!!!!</title>
+    <script type="text/javascript">
+      const socket = io();
+      let hasId = false;
+      let userId;
+      let playerColor;
+      let userName;
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+      function getId() {
+        console.log(userId);
+        return userId;
+      }
+
+      function colorAssign(id) {
+        console.log("click");
+        console.log(id);
+        var form = document.getElementById("avatar");
+        switch (id) {
+          case "avatar1":
+            if (playerColor != null) {
+              document
+                .getElementsByClassName("avatar-img-selected")
+                .classList.remove("avatar-img-selected");
+            }
+            //            document.getElementById("timer-color").classList.remove(info.color);
+            //            document.getElementById("timer-color").classList.add(warning.color);
+            document
+              .getElementById("avatar1")
+              .classList.add("avatar-img-selected");
+            playerColor = "red";
+            break;
+          case "avatar2":
+            if (playerColor != null) {
+              document
+                .getElementsByClassName("avatar-img-selected")
+                .classList.remove("avatar-img-selected");
+            }
+            document
+              .getElementById("avatar2")
+              .classList.add("avatar-img-selected");
+            playerColor = "yellow";
+            break;
+          case "avatar3":
+            if (playerColor != null) {
+              document
+                .getElementsByClassName("avatar-img-selected")
+                .classList.remove("avatar-img-selected");
+            }
+            document
+              .getElementById("avatar3")
+              .classList.add("avatar-img-selected");
+            playerColor = "blue";
+            break;
+          case "avatar4":
+            if (playerColor != null) {
+              document
+                .getElementsByClassName("avatar-img-selected")
+                .classList.remove("avatar-img-selected");
+            }
+            document
+              .getElementById("avatar4")
+              .classList.add("avatar-img-selected");
+            playerColor = "green";
+            break;
+          case "avatar5":
+            if (playerColor != null) {
+              document
+                .getElementsByClassName("avatar-img-selected")
+                .classList.remove("avatar-img-selected");
+            }
+            document
+              .getElementById("avatar5")
+              .classList.add("avatar-img-selected");
+            playerColor = "purple";
+            break;
+          default:
+            playerColor = "black";
+        }
+        if (userId == null) return;
+        socket.emit("playerColorId", { playerColor, userId });
+      }
+
+      function startGame() {
+        socket.emit("pickRoles");
+        console.log("game go");
+        console.log(userId);
+      }
+
+      window.onload = function () {
+        document
+          .getElementById("nickname")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get("name");
+            console.log(name);
+            userName=name;
+            if (hasId) return;
+            socket.emit("join", { name });
+          });
+
+        socket.on("assignedId", (id) => {
+          console.log(id);
+          if (hasId) return;
+          const listItem = document.querySelector("li:last-child");
+          const newItem = document.createElement("li");
+          newItem.innerHTML = name;
+          listItem.parentNode.appendChild(newItem, listItem);
+          console.log("Your id: " + id.toString()), (hasId = true);
+          userId = id;
+          if (playerColor == null) return;
+          socket.emit("playerColorId", { playerColor, userName, userId });
+        });
+
+        socket.on("assignedName", (user) => {
+          console.log(user);
+          playerName = user.name.toString();
+          console.log(playerName);
+          if (playerName == name) return;
+          const listItem = document.querySelector("li:last-child");
+          let newItem = document.createElement("li");
+          newItem.innerHTML = playerName;
+          listItem.parentNode.appendChild(newItem, listItem);
+        });
+
+        socket.on("rolesPicked", (host) => {
+          console.log(host);
+          hostId = host.toString();
+          console.log(userId);
+          if (hostId == userId) {
+            console.log("You are the host");
+            let imHost = true;
+            document.location.href = "/host";
+            preventDefault();
+            console.log("You are the host");
+          } else if (userId == 5) {
+            document.location.href = `/player` + hostId + playerColor;
+            preventDefault();
+          } else {
+            document.location.href = `/player` + userId + playerColor;
+            preventDefault();
+          }
+        });
+      };
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <main>
+      <h1>TSA Game Team: 48354098 ## etc. filler title here</h1>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      <div id="player-id">
+        <form id="nickname">
+          <label for="name">What do you call yourself?!?!</label><br />
+          <input type="text" id="name" name="name" placeholder="Nickname" />
+          <input id="submit" type="submit" value="Join!" />
+        </form>
+        <form id="avatar" action="">
+          <img
+            id="avatar1"
+            class="avatar-img"
+            src="avatar-sample-png.png"
+            alt="avatar 1"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <input
+            id="avatar1"
+            name="avatar1"
+            class="avatar-img-gif"
+            type="image"
+            src="avatar-sample.gif"
+            alt="avatar 1"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <img
+            id="avatar2"
+            class="avatar-img"
+            src="avatar-sample-png.png"
+            alt="avatar 2"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <input
+            id="avatar2"
+            name="avatar2"
+            class="avatar-img-gif"
+            type="image"
+            src="avatar-sample.gif"
+            alt="avatar 2"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <img
+            id="avatar3"
+            class="avatar-img"
+            src="avatar-sample-png.png"
+            alt="avatar 3"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <input
+            id="avatar3"
+            name="avatar3"
+            class="avatar-img-gif"
+            type="image"
+            src="avatar-sample.gif"
+            alt="avatar 3"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <img
+            id="avatar4"
+            class="avatar-img"
+            src="avatar-sample-png.png"
+            alt="avatar 4"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <input
+            id="avatar4"
+            name="avatar4"
+            class="avatar-img-gif"
+            type="image"
+            src="avatar-sample.gif"
+            alt="avatar 4"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <img
+            id="avatar5"
+            class="avatar-img"
+            src="avatar-sample-png.png"
+            alt="avatar 5"
+            onclick="colorAssign(this.id, userId)"
+          />
+          <input
+            id="avatar5"
+            name="avatar5"
+            class="avatar-img-gif"
+            type="image"
+            src="avatar-sample.gif"
+            alt="avatar 5"
+            onclick="colorAssign(this.id, userId)"
+          />
+        </form>
+      </div>
+      <div id="gamelist">
+        <h3>Waiting to play...</h3>
+        <button id="quick-start" onClick="startGame()">Start now!</button>
+        <br />
+        <ol>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+        <br />
+      </div>
+    </main>
   </body>
 </html>
