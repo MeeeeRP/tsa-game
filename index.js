@@ -34,6 +34,13 @@ const io = require("socket.io")(server);
 let clicks = 1;
 let gameList = [];
 let playerCount = 0;
+let player1Identifier;
+let player2Identifier;
+let player3Identifier;
+let player4Identifier;
+let player5Identifier;
+let playerList=[player1Identifier,player2Identifier,player3Identifier,player4Identifier,player5Identifier];
+
 io.on("connection", (socket) => {
   console.log("A user connected");
 
@@ -63,8 +70,12 @@ io.on("connection", (socket) => {
       io.emit("assignedName", name);
       console.log(name);
       console.log(names);
+      if (playerCount==5) {
+        io.emit("gamefull", {} );
+      }
     } else {
-      socket.emit("gameFull", {});
+      io.emit("gamefull", {} );
+      console.log("howwwww");
     }
   });
 
@@ -75,40 +86,64 @@ io.on("connection", (socket) => {
     io.emit("rolesPicked", hostId);
   });
 
-let player1Identifier;
-let player2Identifier;
-let player3Identifier;
-let player4Identifier;
-
   socket.on("playerColorId", (color, username, id) => {
     // let playerColor = color;
     // playerId=id;
     console.log(color);
     console.log(username);
     console.log(id);
-    switch (id) {
-      case 1:
-        player1Identifier = [color, username, id];
-        console.log(player1Identifier);
-        break;
-      case 2:
-        player2Identifier = [color, username, id];
-        break;
-      case 3:
-        player3Identifier = [color, username, id];
-        break;
-      case 4:
-        player4Identifier = [color, username, id];
+    let tempId = id.userId;
+    let tempUsername = username.userName.toString();
+    let tempColor = color.playerColor.toString();
+
+    console.log(tempId);
+    console.log(tempUsername);
+    console.log(tempColor);
+
+    if (tempId==1) {
+      player1Identifier = [tempColor, tempUsername];
+      console.log("player1 defined");
+      console.log(player1Identifier);
+      playerList[0]=player1Identifier;
     }
+    if (tempId==2) {
+      player2Identifier = [tempColor, tempUsername];
+      console.log("player2 defined");
+      playerList[1]=player2Identifier;
+    }
+    if (tempId==3) {
+      player3Identifier = [tempColor, tempUsername];
+      console.log("player3 defined");
+      playerList[2]=player3Identifier;
+
+    }
+    if (tempId==4) {
+      player4Identifier = [tempColor, tempUsername];
+      console.log("player4 defined");
+      playerList[3]=player4Identifier;
+
+    }
+    if (tempId==5) {
+      player5Identifier = [tempColor, tempUsername];
+      console.log("player5 defined");
+      playerList[4]=player5Identifier;
+
+    }
+    // playerList = [
+    //   player1Identifier,
+    //   player2Identifier,
+    //   player3Identifier,
+    //   player4Identifier,
+    //   player5Identifier,
+    // ];
+    // console.log(playerList[0][0]);
     //    io.emit("assignedColor", {playerColor, playerId});
   });
   socket.on("pageStartUp", () => {
     console.log("sending players..");
-    console.log(player1Identifier);
-    io.emit("playerList", player1Identifier, player2Identifier, player3Identifier, player4Identifier);
+    console.log(playerList);
+    io.emit("playerList", {playerList: playerList});
   });
-
-
 });
 
 app.get("/player*", (req, res) => {

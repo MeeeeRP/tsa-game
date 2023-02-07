@@ -13,6 +13,7 @@ let promptChosen = false;
 let playerColor = location.pathname.toString().substring(8);
 let ogCoords;
 let defaultCoords;
+let stopDraw=false;
 
 console.log(playerColor);
 
@@ -48,6 +49,8 @@ function writePrompt() {
 
 function onTimesUp() {
   clearInterval(timerInterval);
+  stopDraw=true;
+
 }
 
 function startTimer() {
@@ -183,6 +186,7 @@ function draw() {
 function mouseDragged() {
   if (!mouseIsPressed) return;
   if (!promptChosen) return;
+  if (stopDraw) return;
   switch (location.pathname.substring(0, 8)) {
     case `/player1`:
       if (mouseX > canvasWidth * 0.5 || mouseY > canvasHeight * 0.5) return;

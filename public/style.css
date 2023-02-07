@@ -139,3 +139,18 @@ h4 {
   height: fit-content;
   margin: 0;
 }
+.avatar-red {
+  border: 10px solid red;
+}
+.avatar-yellow {
+  border: 10px solid yellow;
+}
+.avatar-blue {
+  border: 10px solid blue;
+}
+.avatar-green {
+  border: 10px solid green;
+}
+.avatar-purple {
+  border: 10px solid purple;
+}

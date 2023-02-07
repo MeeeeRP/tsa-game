@@ -31,6 +31,105 @@ function pickWinner() {
 
   // document.getElementsByClassName("avatar-div").classList.add("avatar-div-win-case");
 }
+function avatarImage(playerAvatars) {
+  var avatar1 = document.getElementById("player1-pic");
+  var profile1 = document.getElementById("player1");
+  var avatar2 = document.getElementById("player2-pic");
+  var profile2 = document.getElementById("player2");
+  var avatar3 = document.getElementById("player3-pic");
+  var profile3 = document.getElementById("player3");
+  var avatar4 = document.getElementById("player4-pic");
+  var profile4 = document.getElementById("player4");
+
+  switch (playerAvatars[0]) {
+    case "red":
+      avatar1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile1.classList.add("avatar-red");
+      break;
+    case "yellow":
+      avatar1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile1.classList.add("avatar-yellow");
+      break;
+    case "blue":
+      avatar1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile1.classList.add("avatar-blue");
+      break;
+    case "green":
+      avatar1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile1.classList.add("avatar-green");
+      break;
+    case "purple":
+      avatar1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile1.classList.add("avatar-purple");
+      break;
+  }
+  switch (playerAvatars[1]) {
+    case "red":
+      avatar2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile2.classList.add("avatar-red");
+      break;
+    case "yellow":
+      avatar2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile2.classList.add("avatar-yellow");
+      break;
+    case "blue":
+      avatar2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile2.classList.add("avatar-blue");
+      break;
+    case "green":
+      avatar2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile2.classList.add("avatar-green");
+      break;
+    case "purple":
+      avatar2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile2.classList.add("avatar-purple");
+      break;
+  }
+  switch (playerAvatars[2]) {
+    case "red":
+      avatar3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile3.classList.add("avatar-red");
+      break;
+    case "yellow":
+      avatar3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile3.classList.add("avatar-yellow");
+      break;
+    case "blue":
+      avatar3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile3.classList.add("avatar-blue");
+      break;
+    case "green":
+      avatar3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile3.classList.add("avatar-green");
+      break;
+    case "purple":
+      avatar3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile3.classList.add("avatar-purple");
+      break;
+  }
+  switch (playerAvatars[3]) {
+    case "red":
+      avatar4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile4.classList.add("avatar-red");
+      break;
+    case "yellow":
+      avatar4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile4.classList.add("avatar-yellow");
+      break;
+    case "blue":
+      avatar4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile4.classList.add("avatar-blue");
+      break;
+    case "green":
+      avatar4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile4.classList.add("avatar-green");
+      break;
+    case "purple":
+      avatar4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+      profile4.classList.add("avatar-purple");
+      break;
+  }
+}
 
 function writePrompt() {
   document.getElementById("prompt-text").innerHTML = promptVar;
@@ -124,13 +223,32 @@ let remainingPathColor = COLOR_CODES.info.color;
 
 window.onload = function () {
   socket.emit("pageStartUp")
-  socket.on("playerList",  (player1, player2, player3, player4) => {
-    namesList = [player1.player1Identifier[1].toString(), player2.player2Identifier[1].toString(), player3.player3Identifier[1].toString(), player4.player4Identifier[1].toString()];
-    playerAvatars = [player1.player1Identifier[0].toString(), player2.player2Identifier[0].toString(), player3.player3Identifier[0].toString(), player4.player4Identifier[0].toString()];
-  });
-
+  socket.on("playerList",  (players) => {
+    console.log(players);
+//    let parsedData=JSON.parse(players);
+    let tempArray = players.playerList;
+    console.log(tempArray[0][0])
+    namesList = [tempArray[0][1], tempArray[1][1], tempArray[2][1], tempArray[3][1]];
+    playerAvatars = [tempArray[0][0], tempArray[1][0], tempArray[2][0], tempArray[3][0]];
+  
   //player1
+  console.log(namesList[0]);
   document.getElementById("player1-name").innerHTML = namesList[0];
+
+    //player2
+    console.log(namesList[1]);
+    document.getElementById("player2-name").innerHTML = namesList[1];
+      //player3
+  console.log(namesList[2]);
+  document.getElementById("player3-name").innerHTML = namesList[2];
+    //player4
+    console.log(namesList[3]);
+    document.getElementById("player4-name").innerHTML = namesList[3];
+
+    avatarImage();
+
+  
+  });
 
   document.getElementById("timer").innerHTML = `
         <div class="base-timer">
@@ -154,7 +272,7 @@ window.onload = function () {
         </div>
         `;
 
-  myColor();
+  // myColor();
 
 };
 

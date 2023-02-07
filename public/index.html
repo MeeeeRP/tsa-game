@@ -20,14 +20,21 @@
       let playerColor;
       let userName;
 
+      function startGame() {
+        socket.emit("pickRoles");
+        console.log("game go");
+        console.log(userId);
+      }
+
       function getId() {
         console.log(userId);
         return userId;
       }
 
-      function colorAssign(id) {
+      function colorAssign(id, userId) {
         console.log("click");
         console.log(id);
+        console.log(userId);
         var form = document.getElementById("avatar");
         switch (id) {
           case "avatar1":
@@ -91,14 +98,10 @@
             playerColor = "black";
         }
         if (userId == null) return;
-        socket.emit("playerColorId", { playerColor, userId });
+        socket.emit("playerColorId", { playerColor} , {userName}, {userId });
       }
 
-      function startGame() {
-        socket.emit("pickRoles");
-        console.log("game go");
-        console.log(userId);
-      }
+
 
       window.onload = function () {
         document
@@ -122,8 +125,9 @@
           listItem.parentNode.appendChild(newItem, listItem);
           console.log("Your id: " + id.toString()), (hasId = true);
           userId = id;
+          console.log(userId);
           if (playerColor == null) return;
-          socket.emit("playerColorId", { playerColor, userName, userId });
+          socket.emit("playerColorId", { playerColor} , {userName}, {userId });
         });
 
         socket.on("assignedName", (user) => {
@@ -154,6 +158,12 @@
             document.location.href = `/player` + userId + playerColor;
             preventDefault();
           }
+        });
+
+        socket.on("gamefull", () => {
+          console.log("gamefull run");
+          document.getElementById("quick-start").classList.add("show-button");
+//          startGame();
         });
       };
     </script>
@@ -253,7 +263,7 @@
       </div>
       <div id="gamelist">
         <h3>Waiting to play...</h3>
-        <button id="quick-start" onClick="startGame()">Start now!</button>
+        <button id="quick-start" onClick="startGame()" class="hide-button">Start now!</button>
         <br />
         <ol>
           <li></li>
