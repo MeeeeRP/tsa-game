@@ -115,25 +115,29 @@ main {
   width: 80px;
   border: 10px solid gold;
 }
-#player1 {
+#player1, #winner1 {
   position: absolute;
   top: 150px;
   left: 10px;
+  z-index: 4;
 }
-#player2 {
+#player2, #winner2 {
   position: absolute;
   top: 150px;
   right: 10px;
+  z-index: 4;
 }
-#player3 {
+#player3, #winner3 {
   position: absolute;
-  bottom: 150px;
+  top: 400px;
   left: 10px;
+  z-index: 4;
 }
-#player4 {
+#player4, #winner4 {
   position: absolute;
-  bottom: 150px;
+  top: 400px;
   right: 10px;
+  z-index: 4;
 }
 h4 {
   height: fit-content;
@@ -153,4 +157,12 @@ h4 {
 }
 .avatar-purple {
   border: 10px solid purple;
+}
+#winner1, #winner2, #winner3, #winner4 {
+  width: 100px;
+  border: 10px solid gold;
+}
+h2 {
+  width: fit-content;
+  height: fit-content;
 }

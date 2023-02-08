@@ -11,32 +11,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <!-- <link rel="stylesheet" href="../mainpagestyle.css" /> -->
     <title>Prompt Pop-Up</title>
-    <script type="text/javascript">
-      const socket = io();
-      const supplyPrompts = [
-        "Zombie in a Walmart bag",
-        "A dinosaur conductor",
-        "A lego unicorn",
-      ];
-      document.addEventListener("DOMContentLoaded", () => {
-        r = Math.floor(Math.random() * supplyPrompts.length);
-        document.getElementById("prompt-box").placeholder = supplyPrompts[r];
-      });
-
-      window.onload = function () {
-        document
-        .getElementById("prompt")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          const formData = new FormData(event.target);
-          const prompt = formData.get("prompt-box");
-          console.log(prompt);
-          socket.emit("prompt", { prompt });
-        });
-      }
-    </script>
+    <script src="../script/prompt.js"></script>
   </head>
   <body>
     <main>

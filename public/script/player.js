@@ -14,9 +14,11 @@ let playerColor = location.pathname.toString().substring(8);
 let ogCoords;
 let defaultCoords;
 let stopDraw=false;
+let myTempId = location.pathname.substring(7,8);
+
+
 
 console.log(playerColor);
-
 
 //assign colors
 function myColor() {
@@ -45,6 +47,7 @@ function myColor() {
 
 function writePrompt() {
   document.getElementById("prompt-text").innerHTML = "Prompt: " + promptVar;
+
 }
 
 function onTimesUp() {
@@ -137,6 +140,32 @@ let timerInterval = null;
 let remainingPathColor = COLOR_CODES.info.color;
 
 window.onload = function () {
+    socket.on("playerList", () => {
+      console.log(myTempId);
+    switch (myTempId) {
+      case `1`:
+  document.getElementById("player-position").innerText = "Top-Left";
+  document.getElementById("player-position").id="player1";
+        break;
+      case `2`:
+  document.getElementById("player-position").innerText = "Top-Right";
+  document.getElementById("player-position").id="player2";
+        break;
+      case `3`:
+  document.getElementById("player-position").innerText = "Bottom-Left";
+  document.getElementById("player-position").id="player3";
+        break;
+      case `4`:
+  document.getElementById("player-position").innerText = "Bottom-Right";
+  document.getElementById("player-position").id="player4";
+        break;
+      default:
+        console.error("error");
+        break;
+        // I don't get why the error doesn't print but this bit does
+    }
+  });
+
   myColor();
 
   document.getElementById("timer").innerHTML = `
@@ -192,29 +221,33 @@ function mouseDragged() {
       if (mouseX > canvasWidth * 0.5 || mouseY > canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor]
+      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+
       break;
     case "/player2":
       if (mouseX < canvasWidth * 0.5 || mouseY > canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor]
+      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+      
       break;
     case "/player3":
       if (mouseX > canvasWidth * 0.5 || mouseY < canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor]
+      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+      
       break;
     case "/player4":
       if (mouseX < canvasWidth * 0.5 || mouseY < canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor]
+      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+
       break;
     default:
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor]
+      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
       console.log(location.pathname.substring(0, 8));
       console.log("default draw");
       break;

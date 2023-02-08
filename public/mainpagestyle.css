@@ -141,8 +141,8 @@ img.avatar-img:hover {
 img.avatar-img {
   z-index: 1;
 }
-input.avatar-img {
-}
+/* input.avatar-img {
+} */
 #avatar1 {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -177,9 +177,7 @@ h1 {
   margin-right: 15%;
 }
 .avatar-img-selected {
-  opacity: 0;
-  border: 10px solid palevioletred;
-  
+  opacity: 0;  
 }
 button {
   visibility: hidden;

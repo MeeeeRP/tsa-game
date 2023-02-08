@@ -39,7 +39,14 @@ let player2Identifier;
 let player3Identifier;
 let player4Identifier;
 let player5Identifier;
-let playerList=[player1Identifier,player2Identifier,player3Identifier,player4Identifier,player5Identifier];
+let playerList = [
+  player1Identifier,
+  player2Identifier,
+  player3Identifier,
+  player4Identifier,
+  player5Identifier,
+];
+let playerPoints = [0,0,0,0,0];
 
 io.on("connection", (socket) => {
   console.log("A user connected");
@@ -61,6 +68,9 @@ io.on("connection", (socket) => {
   let names = [];
 
   socket.on("join", (name) => {
+    while (names.includes(name)) {
+      name += Math.floor(Math.random() * 10);
+    }
     if (playerCount < 5) {
       socket.playerId = playerCount + 1;
       playerCount++;
@@ -70,11 +80,9 @@ io.on("connection", (socket) => {
       io.emit("assignedName", name);
       console.log(name);
       console.log(names);
-      if (playerCount==5) {
-        io.emit("gamefull", {} );
-      }
+      if (playerCount === 5) return;
     } else {
-      io.emit("gamefull", {} );
+      //io.emit("gamefull", {});
       console.log("howwwww");
     }
   });
@@ -86,48 +94,59 @@ io.on("connection", (socket) => {
     io.emit("rolesPicked", hostId);
   });
 
+  let colors = [];
+  let hasColor = [];
+
+  //iumplement a system whjere if a user selects a different color the color gets removed from colors
   socket.on("playerColorId", (color, username, id) => {
+    if (colors.includes(color)) {
+      io.emit("colorTaken");
+    } else {
+      colors.push(color);
+      console.log(hasColor);
+    }
+    
     // let playerColor = color;
     // playerId=id;
     console.log(color);
     console.log(username);
     console.log(id);
+    if (!hasColor.includes(id)) {
+      hasColor.push(id);
+      console.log(hasColor);
+    }
     let tempId = id.userId;
     let tempUsername = username.userName.toString();
     let tempColor = color.playerColor.toString();
-
     console.log(tempId);
     console.log(tempUsername);
     console.log(tempColor);
 
-    if (tempId==1) {
-      player1Identifier = [tempColor, tempUsername];
+    if (tempId === 1) {
+      player1Identifier = [tempColor, tempUsername, tempId];
       console.log("player1 defined");
       console.log(player1Identifier);
-      playerList[0]=player1Identifier;
+      playerList[0] = player1Identifier;
     }
-    if (tempId==2) {
-      player2Identifier = [tempColor, tempUsername];
+    if (tempId === 2) {
+      player2Identifier = [tempColor, tempUsername, tempId];
       console.log("player2 defined");
-      playerList[1]=player2Identifier;
+      playerList[1] = player2Identifier;
     }
-    if (tempId==3) {
-      player3Identifier = [tempColor, tempUsername];
+    if (tempId === 3) {
+      player3Identifier = [tempColor, tempUsername, tempId];
       console.log("player3 defined");
-      playerList[2]=player3Identifier;
-
+      playerList[2] = player3Identifier;
     }
-    if (tempId==4) {
-      player4Identifier = [tempColor, tempUsername];
+    if (tempId === 4) {
+      player4Identifier = [tempColor, tempUsername, tempId];
       console.log("player4 defined");
-      playerList[3]=player4Identifier;
-
+      playerList[3] = player4Identifier;
     }
-    if (tempId==5) {
-      player5Identifier = [tempColor, tempUsername];
+    if (tempId === 5) {
+      player5Identifier = [tempColor, tempUsername, tempId];
       console.log("player5 defined");
-      playerList[4]=player5Identifier;
-
+      playerList[4] = player5Identifier;
     }
     // playerList = [
     //   player1Identifier,
@@ -138,14 +157,27 @@ io.on("connection", (socket) => {
     // ];
     // console.log(playerList[0][0]);
     //    io.emit("assignedColor", {playerColor, playerId});
+    console.log("hasColor length: " + hasColor.length)
+    if (hasColor.length === 5) { //don't
+      io.emit("gamefull");
+    }
   });
   socket.on("pageStartUp", () => {
     console.log("sending players..");
     console.log(playerList);
-    io.emit("playerList", {playerList: playerList});
+    io.emit("playerList", { playerList: playerList });
+  });
+  socket.on("assignPoints", (winner) => {
+    let winnerId=winner.player;
+    playerPoints[winnerId-1]+=200;
+    console.log(playerPoints);
   });
 });
 
 app.get("/player*", (req, res) => {
   res.sendFile(__dirname + "/public/player/index.html");
+});
+
+app.get("/host*", (req, res) => {
+  res.sendFile(__dirname + "/public/host/index.html");
 });

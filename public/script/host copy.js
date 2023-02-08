@@ -33,58 +33,57 @@ function givePlayerPoints(player) {
   }
 }
 
-function pickWinner() {
+function pickWinner(p1, p2, p3, p4) {
   // let avatarIds = document.getElementById("player1");
-  document.getElementById("player1").classList.add("avatar-div-win-case");
+  profile1.classList.add("avatar-div-win-case");
   // let avatarIds = document.getElementById("player2");
-  document.getElementById("player2").classList.add("avatar-div-win-case");
+  profile2.classList.add("avatar-div-win-case");
   // let avatarIds = document.getElementById("player3");
-  document.getElementById("player3").classList.add("avatar-div-win-case");
+  profile3.classList.add("avatar-div-win-case");
   // let avatarIds = document.getElementById("player4");
-  document.getElementById("player4").classList.add("avatar-div-win-case");
+  profile4.classList.add("avatar-div-win-case");
 
-  document.getElementById("player1").onclick = "givePlayerPoints(playerIds[0])";
-  document.getElementById("player2").onclick = "givePlayerPoints(playerIds[1])";
-  document.getElementById("player3").onclick = "givePlayerPoints(playerIds[2])";
-  document.getElementById("player4").onclick = "givePlayerPoints(playerIds[3])";
+  profile1.onclick = "givePlayerPoints(playerIds[0])";
+  profile2.onclick = "givePlayerPoints(playerIds[1])";
+  profile3.onclick = "givePlayerPoints(playerIds[2])";
+  profile4.onclick = "givePlayerPoints(playerIds[3])";
   // document.getElementsByClassName("avatar-div").classList.add("avatar-div-win-case");
 }
 
-function avatarImage() {
+function avatarImage(
+  a1,
+  p1,
+  a2,
+  p2,
+  a3,
+  p3,
+  a4,
+  p4
+) {
   console.log(playerAvatars);
 
   if (playerIds[0] !== 5) {
     console.log(playerAvatars[0]);
     switch (playerAvatars[0]) {
       case "red":
-        document.getElementById(
-          "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
-        document.getElementById("player1").classList.add("avatar-red");
+        a1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        p1.classList.add("avatar-red");
         break;
       case "yellow":
-        document.getElementById(
-          "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.deena.png" alt=""/>`;
-        document.getElementById("player1").classList.add("avatar-yellow");
+        a1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.deena.png" alt=""/>`;
+        p1.classList.add("avatar-yellow");
         break;
       case "blue":
-        document.getElementById(
-          "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
-        document.getElementById("player1").classList.add("avatar-blue");
+        a1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        p1.classList.add("avatar-blue");
         break;
       case "green":
-        document.getElementById(
-          "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
-        document.getElementById("player1").classList.add("avatar-green");
+        a1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        p1.classList.add("avatar-green");
         break;
       case "purple":
-        document.getElementById(
-          "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
-        document.getElementById("player1").classList.add("avatar-purple");
+        a1.innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        p1.classList.add("avatar-purple");
         break;
       default:
         console.error("problem...");
@@ -95,34 +94,24 @@ function avatarImage() {
     console.log(playerAvatars[1]);
     switch (playerAvatars[1]) {
       case "red":
-        document.getElementById(
-          "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
-        document.getElementById("player2").classList.add("avatar-red");
+        a2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        p2.classList.add("avatar-red");
         break;
       case "yellow":
-        document.getElementById(
-          "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
+        a2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
         profile2.classList.add("avatar-yellow");
         break;
       case "blue":
-        document.getElementById(
-          "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
-        document.getElementById("player2").classList.add("avatar-blue");
+        a2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        p2.classList.add("avatar-blue");
         break;
       case "green":
-        document.getElementById(
-          "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
-        document.getElementById("player2").classList.add("avatar-green");
+        a2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        p2.classList.add("avatar-green");
         break;
       case "purple":
-        document.getElementById(
-          "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
-        document.getElementById("player2").classList.add("avatar-purple");
+        a2.innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        p2.classList.add("avatar-purple");
         break;
       default:
         console.error("problem...");
@@ -133,34 +122,24 @@ function avatarImage() {
     console.log(playerAvatars[2]);
     switch (playerAvatars[2]) {
       case "red":
-        document.getElementById(
-          "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
-        document.getElementById("player3").classList.add("avatar-red");
+        a3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        p3.classList.add("avatar-red");
         break;
       case "yellow":
-        document.getElementById(
-          "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
-        document.getElementById("player3").classList.add("avatar-yellow");
+        a3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
+        p3.classList.add("avatar-yellow");
         break;
       case "blue":
-        document.getElementById(
-          "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
-        document.getElementById("player3").classList.add("avatar-blue");
+        a3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        p3.classList.add("avatar-blue");
         break;
       case "green":
-        document.getElementById(
-          "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
-        document.getElementById("player3").classList.add("avatar-green");
+        a3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        p3.classList.add("avatar-green");
         break;
       case "purple":
-        document.getElementById(
-          "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
-        document.getElementById("player3").classList.add("avatar-purple");
+        a3.innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        p3.classList.add("avatar-purple");
         break;
       default:
         console.error("problem...");
@@ -171,34 +150,24 @@ function avatarImage() {
     console.log(playerAvatars[3]);
     switch (playerAvatars[3]) {
       case "red":
-        document.getElementById(
-          "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
-        document.getElementById("player4").classList.add("avatar-red");
+        a4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        p4.classList.add("avatar-red");
         break;
       case "yellow":
-        document.getElementById(
-          "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
-        document.getElementById("player4").classList.add("avatar-yellow");
+        a4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
+        p4.classList.add("avatar-yellow");
         break;
       case "blue":
-        document.getElementById(
-          "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
-        document.getElementById("player4").classList.add("avatar-blue");
+        a4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        p4.classList.add("avatar-blue");
         break;
       case "green":
-        document.getElementById(
-          "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
-        document.getElementById("player4").classList.add("avatar-green");
+        a4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        p4.classList.add("avatar-green");
         break;
       case "purple":
-        document.getElementById(
-          "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
-        document.getElementById("player4").classList.add("avatar-purple");
+        a4.innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        p4.classList.add("avatar-purple");
         break;
       default:
         console.error("problem...");
@@ -213,7 +182,6 @@ function avatarImage() {
 function writePrompt() {
   document.getElementById("prompt-text").innerHTML = promptVar;
 }
-
 function onTimesUp() {
   clearInterval(timerInterval);
   pickWinner();
@@ -378,7 +346,16 @@ window.onload = function () {
     let avatar4 = document.getElementById("player4-pic");
     let profile4 = document.getElementById("player4");
 
-    avatarImage();
+    avatarImage(
+      avatar1,
+      profile1,
+      avatar2,
+      profile2,
+      avatar3,
+      profile3,
+      avatar4,
+      profile4
+    );
   });
 
   document.getElementById("timer").innerHTML = `
