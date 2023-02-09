@@ -17,20 +17,55 @@ let playerColor;
 let defaultCoords;
 let namesList = [];
 let hostId = location.pathname.substring(5, 6);
+let player1=false;
+let player2=false;
+let player3=false;
+let player4=false;
+let reran=false;
+let winStage=false;
+
+function repeatGame() {
+  socket.emit("pickRoles");
+  console.log("game go again");
+}
+
+socket.on("pointsAssigned", () => {
+winStage=false;
+const fillerP = document.querySelector("div:last-child");
+const nextRoundButton = document.createElement("button");
+nextRoundButton.innerHTML = `<button id="repeat-start" onClick="repeatGame()" class="hide-button">Next round!</button>`;
+fillerP.nextRoundButton.replace(nextRoundButton, fillerP);
+document.getElementById("repeat-start").classList.add("show-button");
+
+// repeatGame();
+
+
+});
 
 function givePlayerPoints(player) {
+  console.log("attempted");
+  if (!winStage) return;
+  console.log("succeeded");
   socket.emit("assignPoints", { player });
   if (player == 1) {
-    document.getElementById("player1").id = "winner1";
+    document.getElementById("player1").classList.add("winner1");
   } else if (player == 2) {
-    document.getElementById("player2").id = "winner2";
+    document.getElementById("player2").classList.add("winner2");
   } else if (player == 3) {
-    document.getElementById("player3").id = "winner3";
+    document.getElementById("player3").classList.add("winner3");
   } else if (player == 4) {
-    document.getElementById("player4").id = "winner4";
+    document.getElementById("player4").classList.add("winner4");
   } else {
+    console.log(player);
     console.error("somethign went wrong");
   }
+  document.getElementById("player1").classList.remove("avatar-div-win-case");
+  // let avatarIds = document.getElementById("player2");
+  document.getElementById("player2").classList.remove("avatar-div-win-case");
+  // let avatarIds = document.getElementById("player3");
+  document.getElementById("player3").classList.remove("avatar-div-win-case");
+  // let avatarIds = document.getElementById("player4");
+  document.getElementById("player4").classList.remove("avatar-div-win-case");
 }
 
 function pickWinner() {
@@ -43,47 +78,45 @@ function pickWinner() {
   // let avatarIds = document.getElementById("player4");
   document.getElementById("player4").classList.add("avatar-div-win-case");
 
-  document.getElementById("player1").onclick = "givePlayerPoints(playerIds[0])";
-  document.getElementById("player2").onclick = "givePlayerPoints(playerIds[1])";
-  document.getElementById("player3").onclick = "givePlayerPoints(playerIds[2])";
-  document.getElementById("player4").onclick = "givePlayerPoints(playerIds[3])";
+  winStage=true;
   // document.getElementsByClassName("avatar-div").classList.add("avatar-div-win-case");
 }
 
-function avatarImage() {
+function avatarImage(checkId1, checkId2, checkId3, checkId4, checkId5) {
   console.log(playerAvatars);
-
-  if (playerIds[0] !== 5) {
+  if ((checkId1 !== 5)&&(!player1)) {
+    console.log("player1 set");
+    player1=true;
     console.log(playerAvatars[0]);
     switch (playerAvatars[0]) {
       case "red":
         document.getElementById(
           "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        ).src = "tsa.game.conor.idle.png";
         document.getElementById("player1").classList.add("avatar-red");
         break;
       case "yellow":
         document.getElementById(
           "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.conor.deena.png" alt=""/>`;
+        ).src = "tsa.game.deena.idle.png";
         document.getElementById("player1").classList.add("avatar-yellow");
         break;
       case "blue":
         document.getElementById(
           "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        ).src = "tsa.game.maya.idle.png";
         document.getElementById("player1").classList.add("avatar-blue");
         break;
       case "green":
         document.getElementById(
           "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        ).src = "tsa.game.elijah.idle.png";
         document.getElementById("player1").classList.add("avatar-green");
         break;
       case "purple":
         document.getElementById(
           "player1-pic"
-        ).innerHTML = `<img id="player1-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        ).src = "tsa.game.gayatri.idle.png";
         document.getElementById("player1").classList.add("avatar-purple");
         break;
       default:
@@ -91,37 +124,39 @@ function avatarImage() {
         break;
     }
   }
-  if (playerIds[1] !== 5) {
+  if ((checkId2 !== 5)&&(!player2)) {
+    console.log("player2 set");
+    player2=true;
     console.log(playerAvatars[1]);
     switch (playerAvatars[1]) {
       case "red":
         document.getElementById(
           "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        ).src = "tsa.game.conor.idle.png";
         document.getElementById("player2").classList.add("avatar-red");
         break;
       case "yellow":
         document.getElementById(
           "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
-        profile2.classList.add("avatar-yellow");
+        ).src = "tsa.game.deena.idle.png";
+        document.getElementById("player2").classList.add("avatar-yellow");
         break;
       case "blue":
         document.getElementById(
           "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        ).src = "tsa.game.maya.idle.png";
         document.getElementById("player2").classList.add("avatar-blue");
         break;
       case "green":
         document.getElementById(
           "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        ).src = "tsa.game.elijah.idle.png";
         document.getElementById("player2").classList.add("avatar-green");
         break;
       case "purple":
         document.getElementById(
           "player2-pic"
-        ).innerHTML = `<img id="player2-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        ).src = "tsa.game.gayatri.idle.png";
         document.getElementById("player2").classList.add("avatar-purple");
         break;
       default:
@@ -129,37 +164,39 @@ function avatarImage() {
         break;
     }
   }
-  if (playerIds[2] !== 5) {
+  if ((checkId3 !== 5)&&(!player3)) {
+    console.log("player3 set");
+    player3=true;
     console.log(playerAvatars[2]);
     switch (playerAvatars[2]) {
       case "red":
         document.getElementById(
           "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        ).src = "tsa.game.conor.idle.png";
         document.getElementById("player3").classList.add("avatar-red");
         break;
       case "yellow":
         document.getElementById(
           "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
+        ).src = "tsa.game.deena.idle.png";
         document.getElementById("player3").classList.add("avatar-yellow");
         break;
       case "blue":
         document.getElementById(
           "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        ).src = "tsa.game.maya.idle.png";
         document.getElementById("player3").classList.add("avatar-blue");
         break;
       case "green":
         document.getElementById(
           "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        ).src = "tsa.game.elijah.idle.png";
         document.getElementById("player3").classList.add("avatar-green");
         break;
       case "purple":
         document.getElementById(
           "player3-pic"
-        ).innerHTML = `<img id="player3-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        ).src = "tsa.game.gayatri.idle.png";
         document.getElementById("player3").classList.add("avatar-purple");
         break;
       default:
@@ -167,37 +204,39 @@ function avatarImage() {
         break;
     }
   }
-  if (playerIds[3] !== 5) {
+  if ((checkId4 !== 5)&&(!player4)) {
+    console.log("player4 set");
+    player4=true;
     console.log(playerAvatars[3]);
     switch (playerAvatars[3]) {
       case "red":
         document.getElementById(
           "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.conor.idle.png" alt=""/>`;
+        ).src = "tsa.game.conor.idle.png";
         document.getElementById("player4").classList.add("avatar-red");
         break;
       case "yellow":
         document.getElementById(
           "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.deena.idle.png" alt=""/>`;
+        ).src = "tsa.game.deena.idle.png";
         document.getElementById("player4").classList.add("avatar-yellow");
         break;
       case "blue":
         document.getElementById(
           "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.maya.idle.png" alt=""/>`;
+        ).src = "tsa.game.maya.idle.png";
         document.getElementById("player4").classList.add("avatar-blue");
         break;
       case "green":
         document.getElementById(
           "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../tsa.game.elijah.idle.png" alt=""/>`;
+        ).src = "tsa.game.elijah.idle.png";
         document.getElementById("player4").classList.add("avatar-green");
         break;
       case "purple":
         document.getElementById(
           "player4-pic"
-        ).innerHTML = `<img id="player4-pic" class="avatar-pic" src="../avatar-sample.gif" alt=""/>`;
+        ).src = "tsa.game.gayatri.idle.png";
         document.getElementById("player4").classList.add("avatar-purple");
         break;
       default:
@@ -205,19 +244,27 @@ function avatarImage() {
         break;
     }
   }
-  if (playerIds[4] !== 5) {
-    console.error("bug needs fix");
+  if ((checkId5 !== 5)&&(!reran)) {
+    console.log("rerun");
+    reran=true;
+    checkId1=0;
+    checkId2=0;
+    checkId3=0;
+    checkId4=0;
+    checkId5=0;
+    avatarImage();
   }
 }
 
 function writePrompt() {
-  document.getElementById("prompt-text").innerHTML = promptVar;
+  document.getElementById("prompt-text").innerHTML = "Prompt: " + promptVar;
+  document.getElementById("prompt-iframe").remove();
 }
 
 function onTimesUp() {
   clearInterval(timerInterval);
   pickWinner();
-  save(canvas, "round1.jpg");
+  // save(canvas, "round1.jpg");
 }
 
 function startTimer() {
@@ -323,6 +370,9 @@ window.onload = function () {
       tempArray[3][0],
       tempArray[4][0],
     ];
+    let hostColor = playerAvatars[hostId-1];
+    playerAvatars[hostId-1]=playerAvatars[4];
+    playerAvatars[4]=hostColor;
     console.log(playerAvatars);
     console.log(playerAvatars[0]);
     console.log(playerAvatars[1]);
@@ -369,16 +419,20 @@ window.onload = function () {
       document.getElementById("player4-name").innerHTML = namesList[4];
     }
 
-    let avatar1 = document.getElementById("player1-pic");
-    let profile1 = document.getElementById("player1");
-    let avatar2 = document.getElementById("player2-pic");
-    let profile2 = document.getElementById("player2");
-    let avatar3 = document.getElementById("player3-pic");
-    let profile3 = document.getElementById("player3");
-    let avatar4 = document.getElementById("player4-pic");
-    let profile4 = document.getElementById("player4");
-
-    avatarImage();
+    // let avatar1 = document.getElementById("player1-pic");
+    // let profile1 = document.getElementById("player1");
+    // let avatar2 = document.getElementById("player2-pic");
+    // let profile2 = document.getElementById("player2");
+    // let avatar3 = document.getElementById("player3-pic");
+    // let profile3 = document.getElementById("player3");
+    // let avatar4 = document.getElementById("player4-pic");
+    // let profile4 = document.getElementById("player4");
+    let checkId1=playerIds[0];
+    let checkId2=playerIds[1];
+    let checkId3=playerIds[2];
+    let checkId4=playerIds[3];
+    let checkId5=playerIds[4];
+    avatarImage(checkId1, checkId2, checkId3, checkId4, checkId5);
   });
 
   document.getElementById("timer").innerHTML = `
@@ -404,6 +458,25 @@ window.onload = function () {
         `;
 
   // myColor();
+  socket.on("rolesPicked", (host) => {
+    console.log(host);
+    hostId = host.toString();
+    console.log(userId);
+    if (hostId == userId) {
+      console.log("You are the host");
+      let imHost = true;
+      document.location.href = `/host` + hostId;
+      preventDefault();
+      console.log("You are the host");
+    } else if (userId == 5) {
+      document.location.href = `/player` + hostId + playerColor;
+      preventDefault();
+    } else {
+      document.location.href = `/player` + userId + playerColor;
+      preventDefault();
+    }
+  });
+
 };
 
 function setup() {

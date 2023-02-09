@@ -20,6 +20,10 @@
       let playerColor;
       let userName;
 
+      socket.on("colorTaken", () => {
+        alert("This avatar is already taken, please choose a different one.");
+      });
+
       function startGame() {
         socket.emit("pickRoles");
         console.log("game go");

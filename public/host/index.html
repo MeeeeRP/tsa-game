@@ -19,7 +19,7 @@
     <div id="timer"></div>
     <main>
       <div id="prompt-data">
-        <iframe src="../prompt/index.html" frameborder="0"></iframe>
+        <iframe src="../prompt/index.html" frameborder="0" id="prompt-iframe"></iframe>
         <h3 id="prompt-text">Please write a prompt</h3>
       </div>
       <br />
@@ -29,20 +29,39 @@
           id="player1-pic"
           class="avatar-pic"
           src="../avatar-sample.gif"
+          onclick="givePlayerPoints(playerIds[0])"
           alt=""
         />
       </div>
       <div id="player2" class="avatar-div">
         <h4 id="player2-name">name2</h4>
-        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+        <img
+          class="avatar-pic"
+          src="../avatar-sample.gif"
+          id="player2-pic"
+          onclick="givePlayerPoints(playerIds[1])"
+          alt=""
+        />
       </div>
       <div id="player3" class="avatar-div">
         <h4 id="player3-name">name3</h4>
-        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+        <img
+          class="avatar-pic"
+          src="../avatar-sample.gif"
+          id="player3-pic"
+          onclick="givePlayerPoints(playerIds[2])"
+          alt=""
+        />
       </div>
       <div id="player4" class="avatar-div">
         <h4 id="player4-name">name4</h4>
-        <img class="avatar-pic" src="../avatar-sample.gif" alt="" />
+        <img
+          class="avatar-pic"
+          src="../avatar-sample.gif"
+          id="player4-pic"
+          onclick="givePlayerPoints(playerIds[3])"
+          alt=""
+        />
       </div>
     </main>
   </body>

@@ -13,10 +13,8 @@ let promptChosen = false;
 let playerColor = location.pathname.toString().substring(8);
 let ogCoords;
 let defaultCoords;
-let stopDraw=false;
-let myTempId = location.pathname.substring(7,8);
-
-
+let stopDraw = false;
+let myTempId = location.pathname.substring(7, 8);
 
 console.log(playerColor);
 
@@ -47,13 +45,11 @@ function myColor() {
 
 function writePrompt() {
   document.getElementById("prompt-text").innerHTML = "Prompt: " + promptVar;
-
 }
 
 function onTimesUp() {
   clearInterval(timerInterval);
-  stopDraw=true;
-
+  stopDraw = true;
 }
 
 function startTimer() {
@@ -140,29 +136,29 @@ let timerInterval = null;
 let remainingPathColor = COLOR_CODES.info.color;
 
 window.onload = function () {
-    socket.on("playerList", () => {
-      console.log(myTempId);
+  socket.on("playerList", () => {
+    console.log(myTempId);
     switch (myTempId) {
       case `1`:
-  document.getElementById("player-position").innerText = "Top-Left";
-  document.getElementById("player-position").id="player1";
+        document.getElementById("player-position").innerText = "Top-Left";
+        document.getElementById("player-position").id = "player1";
         break;
       case `2`:
-  document.getElementById("player-position").innerText = "Top-Right";
-  document.getElementById("player-position").id="player2";
+        document.getElementById("player-position").innerText = "Top-Right";
+        document.getElementById("player-position").id = "player2";
         break;
       case `3`:
-  document.getElementById("player-position").innerText = "Bottom-Left";
-  document.getElementById("player-position").id="player3";
+        document.getElementById("player-position").innerText = "Bottom-Left";
+        document.getElementById("player-position").id = "player3";
         break;
       case `4`:
-  document.getElementById("player-position").innerText = "Bottom-Right";
-  document.getElementById("player-position").id="player4";
+        document.getElementById("player-position").innerText = "Bottom-Right";
+        document.getElementById("player-position").id = "player4";
         break;
       default:
         console.error("error");
         break;
-        // I don't get why the error doesn't print but this bit does
+      // I don't get why the error doesn't print but this bit does
     }
   });
 
@@ -189,16 +185,34 @@ window.onload = function () {
           <span id="time-display">${formatTime(timeLeft)}</span>
         </div>
         `;
+  socket.on("rolesPicked", (host) => {
+    console.log(host);
+    hostId = host.toString();
+    console.log(userId);
+    if (hostId == userId) {
+      console.log("You are the host");
+      let imHost = true;
+      document.location.href = `/host` + hostId;
+      preventDefault();
+      console.log("You are the host");
+    } else if (userId == 5) {
+      document.location.href = `/player` + hostId + playerColor;
+      preventDefault();
+    } else {
+      document.location.href = `/player` + userId + playerColor;
+      preventDefault();
+    }
+  });
 };
 
 function setup() {
   canvasHeight = window.innerHeight * 0.8;
-canvasWidth = window.innerWidth * 0.8;
-if (canvasHeight > canvasWidth) {
-  canvasHeight = canvasWidth;
-} else {
-  canvasWidth = canvasHeight;
-}
+  canvasWidth = window.innerWidth * 0.8;
+  if (canvasHeight > canvasWidth) {
+    canvasHeight = canvasWidth;
+  } else {
+    canvasWidth = canvasHeight;
+  }
   canvas = createCanvas(canvasWidth, canvasHeight);
   background(255);
 
@@ -221,33 +235,63 @@ function mouseDragged() {
       if (mouseX > canvasWidth * 0.5 || mouseY > canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+      coords = [
+        mouseX / canvasWidth,
+        mouseY / canvasHeight,
+        pmouseX / canvasWidth,
+        pmouseY / canvasHeight,
+        playerColor,
+      ];
 
       break;
     case "/player2":
       if (mouseX < canvasWidth * 0.5 || mouseY > canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
-      
+      coords = [
+        mouseX / canvasWidth,
+        mouseY / canvasHeight,
+        pmouseX / canvasWidth,
+        pmouseY / canvasHeight,
+        playerColor,
+      ];
+
       break;
     case "/player3":
       if (mouseX > canvasWidth * 0.5 || mouseY < canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
-      
+      coords = [
+        mouseX / canvasWidth,
+        mouseY / canvasHeight,
+        pmouseX / canvasWidth,
+        pmouseY / canvasHeight,
+        playerColor,
+      ];
+
       break;
     case "/player4":
       if (mouseX < canvasWidth * 0.5 || mouseY < canvasHeight * 0.5) return;
       line(mouseX, mouseY, pmouseX, pmouseY);
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+      coords = [
+        mouseX / canvasWidth,
+        mouseY / canvasHeight,
+        pmouseX / canvasWidth,
+        pmouseY / canvasHeight,
+        playerColor,
+      ];
 
       break;
     default:
       ogCoords = [mouseX, mouseY, pmouseX, pmouseY, playerColor];
-      coords = [mouseX/canvasWidth, mouseY/canvasHeight, pmouseX/canvasWidth, pmouseY/canvasHeight, playerColor];
+      coords = [
+        mouseX / canvasWidth,
+        mouseY / canvasHeight,
+        pmouseX / canvasWidth,
+        pmouseY / canvasHeight,
+        playerColor,
+      ];
       console.log(location.pathname.substring(0, 8));
       console.log("default draw");
       break;
@@ -265,7 +309,12 @@ function draw() {
 
 socket.on("receiveCoords", (pCoords) => {
   defaultCoords = pCoords;
-  drawCoords = [defaultCoords[0]*canvasWidth, defaultCoords[1]*canvasHeight, defaultCoords[2]*canvasWidth, defaultCoords[3]*canvasHeight];
+  drawCoords = [
+    defaultCoords[0] * canvasWidth,
+    defaultCoords[1] * canvasHeight,
+    defaultCoords[2] * canvasWidth,
+    defaultCoords[3] * canvasHeight,
+  ];
   console.log(drawCoords);
   console.log("received");
   drawLine();

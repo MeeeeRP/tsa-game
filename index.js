@@ -39,14 +39,10 @@ let player2Identifier;
 let player3Identifier;
 let player4Identifier;
 let player5Identifier;
-let playerList = [
-  player1Identifier,
-  player2Identifier,
-  player3Identifier,
-  player4Identifier,
-  player5Identifier,
-];
-let playerPoints = [0,0,0,0,0];
+let playerList = [];
+let playerPoints = [0, 0, 0, 0, 0];
+let colors = [];
+let hasColor = [];
 
 io.on("connection", (socket) => {
   console.log("A user connected");
@@ -94,18 +90,18 @@ io.on("connection", (socket) => {
     io.emit("rolesPicked", hostId);
   });
 
-  let colors = [];
-  let hasColor = [];
-
   //iumplement a system whjere if a user selects a different color the color gets removed from colors
   socket.on("playerColorId", (color, username, id) => {
+    console.log("colors (array) " + colors);
+    console.log("color " + color);
+
     if (colors.includes(color)) {
       io.emit("colorTaken");
     } else {
       colors.push(color);
-      console.log(hasColor);
+      console.log("hasColor= " + hasColor);
     }
-    
+
     // let playerColor = color;
     // playerId=id;
     console.log(color);
@@ -157,8 +153,9 @@ io.on("connection", (socket) => {
     // ];
     // console.log(playerList[0][0]);
     //    io.emit("assignedColor", {playerColor, playerId});
-    console.log("hasColor length: " + hasColor.length)
-    if (hasColor.length === 5) { //don't
+    console.log("hasColor length: " + hasColor.length);
+    if (hasColor.length === 5) {
+      //don't
       io.emit("gamefull");
     }
   });
@@ -168,9 +165,10 @@ io.on("connection", (socket) => {
     io.emit("playerList", { playerList: playerList });
   });
   socket.on("assignPoints", (winner) => {
-    let winnerId=winner.player;
-    playerPoints[winnerId-1]+=200;
+    let winnerId = winner.player;
+    playerPoints[winnerId - 1] += 200;
     console.log(playerPoints);
+    io.emit("pointsAssigned");
   });
 });
 
